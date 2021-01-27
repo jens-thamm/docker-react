@@ -1,4 +1,6 @@
-FROM node AS builder
+# FROM node AS builder
+# AWS fix
+FROM node
 WORKDIR '/app'
 COPY package.json .
 RUN npm install
@@ -8,4 +10,6 @@ RUN npm run build
 FROM nginx
 # for AWS:
 EXPOSE 80
-COPY --from=builder /app/build /usr/share/nginx/html
+# COPY --from=builder /app/build /usr/share/nginx/html
+# AWS fix
+COPY --from=0 /app/build /usr/share/nginx/html
